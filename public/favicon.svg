@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+  <circle cx="25" cy="26" r="23" fill="#233e96" opacity="0.5"/>
+
+  <circle id="mainCircle" cx="25" cy="25" r="23" fill="url(#radialGradient)"/>
+
+  <defs>
+    <radialGradient id="radialGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4A90E2"/>
+      <stop offset="100%" stop-color="#2958A1"/>
+    </radialGradient>
+  </defs>
+
+  <text y="34" transform="rotate(-20 25 25)">
+    <tspan x="10.5" fill="url(#gradientText)" font-family="Arial Black" font-size="16" alignment-baseline="middle" dominant-baseline="middle">S</tspan>
+    <tspan x="21" fill="url(#gradientText)" font-family="Arial Black" font-size="16" alignment-baseline="middle" dominant-baseline="middle">V</tspan>
+    <tspan x="32" fill="url(#gradientText)" font-family="Arial Black" font-size="16" alignment-baseline="middle" dominant-baseline="middle">G</tspan>
+  </text>
+
+  <defs>
+    <linearGradient id="gradientText" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+  </defs>
+</svg>
