@@ -96,7 +96,7 @@ const Home = () => {
         <h1 className="text-2xl font-bold">SVG Editor GenAI</h1>
       </header>
       <main className="flex flex-1 overflow-hidden">
-        <div className="w-1/2 p-4 bg-white shadow-lg">
+        <div className="w-1/2 p-4 bg-white shadow-lg flex flex-col">
           <CodeEditor
             code={svgCode}
             onChange={updateCode}
