@@ -4,6 +4,7 @@ import CodeEditor from '../components/CodeEditor';
 import ErrorDialog from '../components/ErrorDialog';
 import GeminiInput from '../components/GeminiInput';
 import LoadingDialog from '../components/LoadingDialog';
+import Resizer from '../components/Resizer';
 import SVGPreview from '../components/SVGPreview';
 import { updateSVGWithGemini } from '../utils/geminiApi';
 
@@ -13,6 +14,7 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [leftWidth, setLeftWidth] = useState<number>(50);
 
   useEffect(() => {
     const initialCode = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
@@ -86,6 +88,10 @@ const Home = () => {
     }
   };
 
+  const handleResize = (newLeftWidth: number) => {
+    setLeftWidth(newLeftWidth);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       <Head>
@@ -95,18 +101,23 @@ const Home = () => {
         <img src="/favicon.svg" alt="App Icon" className="h-8 w-8 mr-2" />
         <h1 className="text-2xl font-bold">SVG Editor GenAI</h1>
       </header>
-      <main className="flex flex-1 overflow-hidden">
-        <div className="w-1/2 p-4 bg-white shadow-lg flex flex-col">
-          <CodeEditor
-            code={svgCode}
-            onChange={updateCode}
-            onUndo={handleUndo}
-            onRedo={handleRedo}
-            onClear={handleClear}
-          />
-        </div>
-        <div className="w-1/2 p-4 bg-white shadow-lg flex flex-col">
-          <SVGPreview code={svgCode} />
+      <main className="flex flex-1 overflow-hidden p-4">
+        <div id="resizable-container" className="flex-grow flex overflow-hidden bg-white rounded-lg shadow-lg">
+          <div style={{ width: `${leftWidth}%` }} className="flex flex-col min-w-[10%] max-w-[90%]">
+            <div className="flex-1 overflow-auto p-4">
+              <CodeEditor
+                code={svgCode}
+                onChange={updateCode}
+                onUndo={handleUndo}
+                onRedo={handleRedo}
+                onClear={handleClear}
+              />
+            </div>
+          </div>
+          <Resizer onResize={handleResize} initialLeftWidth={leftWidth} />
+          <div style={{ width: `${100 - leftWidth}%` }} className="flex flex-col p-4 min-w-[10%] max-w-[90%]">
+            <SVGPreview code={svgCode} />
+          </div>
         </div>
       </main>
       <footer className="bg-gray-200 p-4">
