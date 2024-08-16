@@ -10,6 +10,7 @@ SVG Editor GenAIは、SVG画像を生成および編集するためのWebアプ�
 - **コピー機能**：エディタの内容をクリップボードにコピーします。
 - **自動更新機能**：指示を入力するとGoogle Generative AIを使用してSVG画像を更新します。
 - **プレビュー機能**：SVG画像のプレビューをリアルタイムで表示します。
+- **リサイズ機能**：エディタとプレビューの幅を調整できます。
 - **ズーム機能**：プレビュー画面でSVG画像をズームインまたはズームアウトできます。
 - **パン機能**：プレビュー画面でSVG画像をドラッグして移動できます。
 
@@ -65,6 +66,7 @@ npm start
 - `components/GeminiInput.tsx`：Google Generative AIに指示を送るための入力コンポーネント。
 - `components/LoadingDialog.tsx`：ローディングダイアログコンポーネント。
 - `components/SVGPreview.tsx`：SVG画像のプレビューコンポーネント。
+- `components/Resizer.tsx`：エディタとプレビューの幅を調整するためのコンポーネント。
 - `pages/_app.tsx`：アプリケーションのメインエントリーポイント。
 - `pages/index.tsx`：ホームページ。
 - `pages/api/gemini.ts`：Google Generative AI APIとの通信を行うAPIルート。
