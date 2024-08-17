@@ -6,6 +6,7 @@ import GeminiInput from '../components/GeminiInput';
 import LoadingDialog from '../components/LoadingDialog';
 import Resizer from '../components/Resizer';
 import SVGPreview from '../components/SVGPreview';
+import ThemeToggle from '../components/ThemeToggle';
 import { updateSVGWithGemini } from '../utils/geminiApi';
 
 const Home = () => {
@@ -95,18 +96,21 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
       <Head>
         <title>SVG Editor GenAI</title>
       </Head>
-      <header className="bg-blue-600 text-white p-4 flex items-center">
-        <img src="/favicon.svg" alt="App Icon" className="h-8 w-8 mr-2" />
-        <h1 className="text-2xl font-bold">SVG Editor GenAI</h1>
+      <header className="bg-blue-600 dark:bg-blue-800 text-white p-4 flex items-center justify-between">
+        <div className="flex items-center">
+          <img src="/favicon.svg" alt="App Icon" className="h-8 w-8 mr-2" />
+          <h1 className="text-2xl font-bold">SVG Editor GenAI</h1>
+        </div>
+        <ThemeToggle />
       </header>
       <main className="flex flex-1 overflow-hidden p-4">
-        <div id="resizable-container" className="flex-grow flex overflow-hidden bg-white rounded-lg shadow-lg">
+        <div id="resizable-container" className="flex-grow flex overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-lg">
           <div style={{ width: `${leftWidth}%` }} className="flex flex-col min-w-[10%] max-w-[90%]">
-            <div className="flex-1 overflow-auto p-4">
+            <div className="flex-1 overflow-auto px-4 pt-4 pb-2">
               <CodeEditor
                 code={svgCode}
                 onChange={updateCode}
@@ -115,6 +119,9 @@ const Home = () => {
                 onClear={handleClear}
               />
             </div>
+            <div className="px-4 pt-2 pb-4">
+              <GeminiInput onSubmit={handleGeminiUpdate} clearTrigger={clearTrigger} />
+            </div>
           </div>
           <Resizer onResize={handleResize} initialLeftWidth={leftWidth} />
           <div style={{ width: `${100 - leftWidth}%` }} className="flex flex-col p-4 min-w-[10%] max-w-[90%]">
@@ -122,9 +129,6 @@ const Home = () => {
           </div>
         </div>
       </main>
-      <footer className="bg-gray-200 p-4">
-        <GeminiInput onSubmit={handleGeminiUpdate} clearTrigger={clearTrigger} />
-      </footer>
       <LoadingDialog isOpen={isLoading} />
       <ErrorDialog isOpen={error !== null} message={error || ''} onClose={() => setError(null)} />
     </div>
