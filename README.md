@@ -13,6 +13,7 @@ SVG Editor GenAIは、SVG画像を生成および編集するためのWebアプ�
 - **リサイズ機能**：エディタとプレビューの幅を調整できます。
 - **ズーム機能**：プレビュー画面でSVG画像をズームインまたはズームアウトできます。
 - **パン機能**：プレビュー画面でSVG画像をドラッグして移動できます。
+- **ダークモード**: ライトモードとダークモードを切り替えることができます。
 
 ## 使用技術
 
@@ -22,6 +23,7 @@ SVG Editor GenAIは、SVG画像を生成および編集するためのWebアプ�
 - Tailwind CSS
 - CodeMirror
 - Google Generative AI (Gemini)
+- Lucide React (アイコン用)
 
 ## 環境構築
 
@@ -67,6 +69,7 @@ npm start
 - `components/LoadingDialog.tsx`：ローディングダイアログコンポーネント。
 - `components/SVGPreview.tsx`：SVG画像のプレビューコンポーネント。
 - `components/Resizer.tsx`：エディタとプレビューの幅を調整するためのコンポーネント。
+- `components/ThemeToggle.tsx`: ライトモードとダークモードを切り替えるためのコンポーネント。
 - `pages/_app.tsx`：アプリケーションのメインエントリーポイント。
 - `pages/index.tsx`：ホームページ。
 - `pages/api/gemini.ts`：Google Generative AI APIとの通信を行うAPIルート。

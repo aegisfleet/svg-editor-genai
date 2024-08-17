@@ -122,7 +122,7 @@ const SVGPreview: React.FC<SVGPreviewProps> = ({ code }) => {
       </div>
       <div
         ref={containerRef}
-        className="flex-grow overflow-auto p-4 border rounded"
+        className="flex-grow overflow-auto p-4 border rounded dark:border-gray-700 dark:bg-gray-900"
         style={{ minHeight: '300px', cursor: dragging ? 'grabbing' : 'grab' }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
