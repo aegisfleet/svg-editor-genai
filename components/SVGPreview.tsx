@@ -14,27 +14,34 @@ const SVGPreview: React.FC<SVGPreviewProps> = ({ code }) => {
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.innerHTML = code;
-      const svg = containerRef.current.querySelector('svg');
-      if (svg) {
-        svgRef.current = svg as SVGSVGElement;
+      try {
+        containerRef.current.innerHTML = code;
+        const svg = containerRef.current.querySelector('svg');
+        if (svg) {
+          svgRef.current = svg as SVGSVGElement;
 
-        const containerWidth = containerRef.current.clientWidth;
-        const containerHeight = containerRef.current.clientHeight;
-        const viewBox = svg.viewBox.baseVal;
+          const containerWidth = containerRef.current.clientWidth;
+          const containerHeight = containerRef.current.clientHeight;
+          const viewBox = svg.viewBox.baseVal;
 
-        const scaleX = containerWidth / viewBox.width;
-        const scaleY = containerHeight / viewBox.height;
-        const newScale = Math.min(scaleX, scaleY) * 0.95;
+          const scaleX = containerWidth / viewBox.width;
+          const scaleY = containerHeight / viewBox.height;
+          const newScale = Math.min(scaleX, scaleY) * 0.95;
 
-        setScale(newScale);
-        setPosition({ x: 0, y: 0 });
+          setScale(newScale);
+          setPosition({ x: 0, y: 0 });
 
-        svg.setAttribute('width', `${viewBox.width}`);
-        svg.setAttribute('height', `${viewBox.height}`);
-        svg.setAttribute('viewBox', `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`);
-        svg.style.transform = `translate(0, 0) scale(${newScale})`;
-        svg.style.transformOrigin = '0 0';
+          svg.setAttribute('width', `${viewBox.width}`);
+          svg.setAttribute('height', `${viewBox.height}`);
+          svg.setAttribute('viewBox', `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`);
+          svg.style.transform = `translate(0, 0) scale(${newScale})`;
+          svg.style.transformOrigin = '0 0';
+        } else {
+          svgRef.current = null;
+        }
+      } catch (error) {
+        console.error('SVGコードのパース中にエラーが発生しました:', error);
+        svgRef.current = null;
       }
     }
   }, [code]);
@@ -52,22 +59,20 @@ const SVGPreview: React.FC<SVGPreviewProps> = ({ code }) => {
   };
 
   const handleResetZoom = () => {
-    if (svgRef.current) {
-      const containerWidth = containerRef.current?.clientWidth || 1;
-      const containerHeight = containerRef.current?.clientHeight || 1;
-      const viewBox = svgRef.current?.viewBox.baseVal;
+    if (svgRef.current && containerRef.current) {
+      const containerWidth = containerRef.current.clientWidth;
+      const containerHeight = containerRef.current.clientHeight;
+      const viewBox = svgRef.current.viewBox.baseVal;
 
-      if (viewBox) {
-        const scaleX = containerWidth / viewBox.width;
-        const scaleY = containerHeight / viewBox.height;
-        const newScale = Math.min(scaleX, scaleY) * 0.95;
+      const scaleX = containerWidth / viewBox.width;
+      const scaleY = containerHeight / viewBox.height;
+      const newScale = Math.min(scaleX, scaleY) * 0.95;
 
-        setScale(newScale);
-        setPosition({ x: 0, y: 0 });
+      setScale(newScale);
+      setPosition({ x: 0, y: 0 });
 
-        svgRef.current!.style.transform = `translate(0, 0) scale(${newScale})`;
-        svgRef.current!.style.transformOrigin = '0 0';
-      }
+      svgRef.current.style.transform = `translate(0, 0) scale(${newScale})`;
+      svgRef.current.style.transformOrigin = '0 0';
     }
   };
 
@@ -81,8 +86,8 @@ const SVGPreview: React.FC<SVGPreviewProps> = ({ code }) => {
     if (!dragging || !svgRef.current) return;
     const newPosition = { x: e.clientX - startPosition.x, y: e.clientY - startPosition.y };
     setPosition(newPosition);
-    svgRef.current!.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px) scale(${scale})`;
-    svgRef.current!.style.transformOrigin = '0 0';
+    svgRef.current.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px) scale(${scale})`;
+    svgRef.current.style.transformOrigin = '0 0';
   };
 
   const handleMouseUp = () => {
