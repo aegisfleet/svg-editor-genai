@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 const updateSVGWithGemini = async (currentCode: string, instruction: string) => {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-exp-0827" });
 
   const prompt = `
 以下の指示に基づいて、SVG形式の画像を高品質に更新する。
