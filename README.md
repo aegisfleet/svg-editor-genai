@@ -2,6 +2,10 @@
 
 SVG Editor GenAIは、SVG画像を生成および編集するためのWebアプリケーションです。Google Generative AI（Gemini）を使用して、指示に基づいてSVG画像を自動的に更新します。
 
+![light_theme](/images/capture_light_theme.png)
+
+![dark_theme](/images/capture_dark_theme.png)
+
 ## 機能
 
 - **コードエディタ**：SVG画像を直接編集できます。
