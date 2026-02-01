@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "overrides": {
+    "lodash-es": "4.17.23"
+  },
   "dependencies": {
     "@codemirror/lang-markdown": "^6.2.5",
     "@google/generative-ai": "^0.16.0",
