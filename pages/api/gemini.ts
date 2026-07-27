@@ -1,18 +1,23 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const API_KEY = process.env.GEMINI_API_KEY;
+export const config = {
+  maxDuration: 60,
+};
 
-if (!API_KEY) {
-  throw new Error("GEMINI_API_KEY is not set in environment variables");
-}
-
-const genAI = new GoogleGenerativeAI(API_KEY);
+const getModelName = () => process.env.GEMINI_MODEL || "gemini-3-flash-preview";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
+
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ message: "GEMINI_API_KEY is not set in environment variables" });
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
 
   const { action, data } = req.body;
 
@@ -20,20 +25,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let result;
     switch (action) {
       case 'updateSVGWithGemini':
-        result = await updateSVGWithGemini(data.currentCode, data.instruction);
+        result = await updateSVGWithGemini(genAI, data.currentCode, data.instruction);
         break;
       default:
         return res.status(400).json({ message: 'Invalid action' });
     }
     res.status(200).json({ result });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error in Gemini API:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
+    res.status(500).json({ message: errorMessage });
   }
 }
 
-const updateSVGWithGemini = async (currentCode: string, instruction: string) => {
-  const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+const updateSVGWithGemini = async (genAI: GoogleGenerativeAI, currentCode: string, instruction: string) => {
+  const model = genAI.getGenerativeModel({ model: getModelName() });
 
   const prompt = `
 以下の指示に基づいて、SVG形式の画像を高品質に更新する。
@@ -67,3 +73,4 @@ ${currentCode}
     throw error;
   }
 };
+
