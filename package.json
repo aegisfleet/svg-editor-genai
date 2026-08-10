@@ -17,7 +17,8 @@
     "minimatch": "^10.0.3",
     "js-yaml": "4.1.1",
     "sharp": "^0.35.0",
-    "yaml": "^2.8.3"
+    "yaml": "^2.8.3",
+    "dompurify": "^3.4.13"
   },
   "dependencies": {
     "@codemirror/lang-markdown": "^6.5.2",
